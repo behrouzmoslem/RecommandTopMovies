@@ -1,6 +1,6 @@
 ﻿namespace RandomRecommended
 {
-    internal class User
+    public class User
     {
         public string UserName { get; set; }
         public bool IsActived { get; set; }
