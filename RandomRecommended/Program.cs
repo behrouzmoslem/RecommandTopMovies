@@ -2,27 +2,29 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using DataLayer;
 using DomainClass;
 
-namespace DomainClass
+namespace RandomRecommended
 {
     class Program
     {
-        static Random rnd = new Random();
+        static readonly Random Rnd = new Random();
 
-        static void Main(string[] args)
+        static void Main()
         {
-            GetValue();
+            Starting();
         }
 
-        private static void GetValue()
+        private static void Starting()
         {
-            Console.WriteLine("What Is Your User?");
-
+            Console.Clear();
+            Console.WriteLine("What Is Your LastName?"); 
 
             ContextList db = new ContextList();
-            var inputUser = Console.ReadLine().ToLower();
-            if (inputUser.Trim().Length == 0)
+            var inputUser = Console.ReadLine();
+         
+            if (inputUser == null || inputUser.Trim().Length == 0)
             {
                 Console.Clear();
                 Console.WriteLine("InCorrect User");
@@ -30,6 +32,7 @@ namespace DomainClass
             }
             else
             {
+                inputUser = inputUser.ToLower().Trim();
                 Console.Clear();
                 Console.WriteLine();
 
@@ -44,7 +47,7 @@ namespace DomainClass
                 var user = GetUser(db.Users, inputUser);
                 if (user == null)
                 {
-                    db.Users.Add(new User() {Id = 1, UserName = inputUser, IsActived = true});
+                    db.Users.Add(new User() { Id = 1, UserName = inputUser, IsActived = true });
                     db.SaveChanges();
                 }
                 user = GetUser(db.Users, inputUser);
@@ -52,23 +55,22 @@ namespace DomainClass
 
                 if (user != null)
                 {
-                    var repeatedRecomanded = db.RecommandedMovies.Where(x => x.Accepted && x.UserId == user.Id);
+                    var repeatedRecomanded = db.UserMovieList.Where(x => x.Accepted && x.UserId == user.Id);
                     var nonRepeatedMovies = movielist
                         .Except(movielist.Join(repeatedRecomanded, a => a.Id, b => b.MovieId, (a, b) => a)).ToList();
 
 
                     if (nonRepeatedMovies.Count != 0)
                     {
-                        int index = rnd.Next(nonRepeatedMovies.Count);
+                        int index = Rnd.Next(nonRepeatedMovies.Count);
                         Console.Clear();
-                        Console.WriteLine("  Selected Movie is : ");
+                        Console.WriteLine("  The Recommanded Movie is : ");
                         Console.WriteLine();
                         Console.WriteLine("       *");
                         Console.WriteLine("       **");
                         Console.WriteLine("       ***");
                         Console.WriteLine("       ****");
-                        Console.WriteLine("       *****");
-
+                        Console.WriteLine("       *****"); 
                         Console.WriteLine("        " + nonRepeatedMovies[index].LatinName);
                         Console.WriteLine("       *****");
                         Console.WriteLine("       ****");
@@ -83,55 +85,63 @@ namespace DomainClass
                         Console.WriteLine();
                         Console.WriteLine("Do you Accept this Recommand(y/n)?");
                         var accepted = Console.ReadLine();
-                        if (accepted.ToLower() == "y".ToLower() || accepted.ToLower() == "yes".ToLower() ||
+                        if (accepted != null)
+                        {
+                            if (accepted.ToLower() == "y".ToLower() || accepted.ToLower() == "yes".ToLower() ||
                             accepted.ToLower() == "+".ToLower())
-                        {
-                            db.RecommandedMovies.Add(
-                                new UserMovie()
-                                {
-                                    Id = 1,
-                                    MovieId = nonRepeatedMovies[index].Id,
-                                    UserId = user.Id,
-                                    Accepted = true
-                                });
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("                       This Movie Is Registering");
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            Console.Clear();
-                            Console.WriteLine("Do you do Again?(y/n)?");
-                            var IsAgain = Console.ReadLine();
-                            if (IsAgain.ToLower() == "y".ToLower() || IsAgain.ToLower() == "yes".ToLower() ||
-                                IsAgain.ToLower() == "+".ToLower())
                             {
-                                Console.Clear();
-                                GetValue();
-                            }
-                            else
-                            {
-                                Console.Clear();
-                                Console.WriteLine("Bye");
-                                Console.ReadKey();
+                                db.UserMovieList.Add(
+                                    new UserMovie()
+                                    {
+                                        Id = 1,
+                                        MovieId = nonRepeatedMovies[index].Id,
+                                        UserId = user.Id,
+                                        Accepted = true
+                                    });
+                                Console.WriteLine();
+                                Console.WriteLine();
+                                Console.WriteLine();
+                                Console.WriteLine("                       This Movie Is Registering");
+                                db.SaveChanges();
                             }
                             
                         }
+
                     }
                     else
                     {
                         Console.WriteLine("Dont Exit");
-                        Console.ReadKey();
+                       
                     }
                 }
                 else
                 {
                     Console.WriteLine("Wrong Data");
+                 
+                }
+                StartAgain();
+            }
+        }
+
+        private static void StartAgain()
+        {
+         Console.Clear();
+            Console.WriteLine("Do you do Again?(y/n)");
+            var isAgain = Console.ReadLine();
+            if (isAgain != null)
+            {
+                if (isAgain.ToLower() == "y".ToLower() || isAgain.ToLower() == "yes".ToLower() ||
+                    isAgain.ToLower() == "+".ToLower())
+                {
+                   
+                    Starting();
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Bye");
                     Console.ReadKey();
                 }
-                Console.ReadKey();
             }
         }
 

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomRecommended", "Random
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainClass", "DomainClass\DomainClass.csproj", "{2A4847D8-B413-4B3F-800D-8726AB7D8CE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{BB1765AF-BC5B-4A0A-868C-51E13AC030FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2A4847D8-B413-4B3F-800D-8726AB7D8CE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A4847D8-B413-4B3F-800D-8726AB7D8CE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A4847D8-B413-4B3F-800D-8726AB7D8CE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB1765AF-BC5B-4A0A-868C-51E13AC030FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB1765AF-BC5B-4A0A-868C-51E13AC030FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB1765AF-BC5B-4A0A-868C-51E13AC030FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB1765AF-BC5B-4A0A-868C-51E13AC030FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

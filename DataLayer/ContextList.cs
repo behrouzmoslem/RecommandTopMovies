@@ -1,7 +1,7 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using DomainClass;
 
-namespace RandomRecommended
+namespace DataLayer
 {
     public class ContextList  : System.Data.Entity.DbContext
     {
@@ -11,6 +11,6 @@ namespace RandomRecommended
         }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<RecommandedMovie> RecommandedMovies { get; set; }
+        public DbSet<UserMovie> UserMovieList { get; set; }
     }
 }
