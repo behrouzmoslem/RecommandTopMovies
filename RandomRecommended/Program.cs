@@ -13,16 +13,15 @@ namespace RandomRecommended
 
         static void Main()
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ContextList>());
+            
             Starting();
         }
 
         private static void Starting()
         {
             Console.Clear();
-            Console.WriteLine("What Is Your LastName?"); 
-
-            ContextList db = new ContextList();
+            Console.WriteLine("What Is Your LastName?");
+      
             var inputUser = Console.ReadLine();
          
             if (inputUser == null || inputUser.Trim().Length == 0)
@@ -33,6 +32,8 @@ namespace RandomRecommended
             }
             else
             {
+                Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ContextList>());
+                var db = new ContextList();
                 inputUser = inputUser.ToLower().Trim();
                 Console.Clear();
                 Console.WriteLine();
