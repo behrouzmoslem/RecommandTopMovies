@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DomainClass
 {
+    [Table("User", Schema = "Acl")]
     public class User
     {
         [Key]

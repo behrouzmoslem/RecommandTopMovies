@@ -40,6 +40,8 @@ namespace RandomRecommended
 
                 Console.WriteLine("Please Wait...");
                  var movielist = GetMovielist(db.Movies);
+               
+               
                 var user = GetUser(db.Users, inputUser);
                 if (user == null)
                 {
