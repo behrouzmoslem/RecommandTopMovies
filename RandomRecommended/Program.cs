@@ -11,7 +11,11 @@ namespace RandomRecommended
 
         static void Main(string[] args)
         {
+            GetValue();
+        }
 
+        private static void GetValue()
+        {
             Console.WriteLine("What Is Your User?");
 
 
@@ -27,7 +31,7 @@ namespace RandomRecommended
             {
                 Console.Clear();
                 Console.WriteLine();
-               
+
                 Console.WriteLine("Please Wait...");
                 var movielist = GetMovielist(db.Movies);
                 if (movielist.Count == 0)
@@ -35,13 +39,11 @@ namespace RandomRecommended
                     Insert(db.Movies);
                     db.SaveChanges();
                     movielist = GetMovielist(db.Movies);
-
-
                 }
                 var user = GetUser(db.Users, inputUser);
                 if (user == null)
                 {
-                    db.Users.Add(new User() { Id = 1, UserName = inputUser, IsActived = true });
+                    db.Users.Add(new User() {Id = 1, UserName = inputUser, IsActived = true});
                     db.SaveChanges();
                 }
                 user = GetUser(db.Users, inputUser);
@@ -50,8 +52,8 @@ namespace RandomRecommended
                 if (user != null)
                 {
                     var repeatedRecomanded = db.RecommandedMovies.Where(x => x.Accepted && x.UserId == user.Id);
-                    var nonRepeatedMovies = movielist.Except(movielist.Join(repeatedRecomanded, a => a.Id, b => b.MovieId, (a, b) => a)).ToList();
-
+                    var nonRepeatedMovies = movielist
+                        .Except(movielist.Join(repeatedRecomanded, a => a.Id, b => b.MovieId, (a, b) => a)).ToList();
 
 
                     if (nonRepeatedMovies.Count != 0)
@@ -73,7 +75,7 @@ namespace RandomRecommended
                         Console.WriteLine("       **");
                         Console.WriteLine("       *");
                         Console.WriteLine("   that is Rate in " +
-                                         nonRepeatedMovies[index].Rate);
+                                          nonRepeatedMovies[index].Rate);
                         Console.WriteLine();
                         Console.WriteLine();
                         Console.WriteLine();
@@ -84,32 +86,44 @@ namespace RandomRecommended
                             accepted.ToLower() == "+".ToLower())
                         {
                             db.RecommandedMovies.Add(
-                          new RecommandedMovie() { Id = 1, MovieId = nonRepeatedMovies[index].Id, UserId = user.Id, Accepted = true });
+                                new RecommandedMovie()
+                                {
+                                    Id = 1,
+                                    MovieId = nonRepeatedMovies[index].Id,
+                                    UserId = user.Id,
+                                    Accepted = true
+                                });
                             Console.WriteLine();
                             Console.WriteLine();
                             Console.WriteLine();
                             Console.WriteLine("                       This Movie Is Registering");
                             db.SaveChanges();
-
                         }
                         else
                         {
-                           
                             Console.Clear();
-                            Console.WriteLine("Bye");
-                            Console.ReadKey();
+                            Console.WriteLine("Do you do Again?(y/n)?");
+                            var IsAgain = Console.ReadLine();
+                            if (IsAgain.ToLower() == "y".ToLower() || IsAgain.ToLower() == "yes".ToLower() ||
+                                IsAgain.ToLower() == "+".ToLower())
+                            {
+                                Console.Clear();
+                                GetValue();
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Bye");
+                                Console.ReadKey();
+                            }
+                            
                         }
-
-
-
                     }
                     else
                     {
                         Console.WriteLine("Dont Exit");
                         Console.ReadKey();
                     }
-
-
                 }
                 else
                 {
@@ -118,7 +132,6 @@ namespace RandomRecommended
                 }
                 Console.ReadKey();
             }
-
         }
 
         private static User GetUser(DbSet<User> users, string username)
