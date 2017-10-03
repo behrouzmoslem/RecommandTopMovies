@@ -13,6 +13,7 @@ namespace RandomRecommended
 
         static void Main()
         {
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ContextList>());
             Starting();
         }
 

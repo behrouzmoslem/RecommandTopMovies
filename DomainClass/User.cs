@@ -10,7 +10,7 @@ namespace DomainClass
         [MaxLength(80, ErrorMessage = "Up to 80 chars")]
         [Required(ErrorMessage = "Please LastName is insert")]
         public string UserName { get; set; } 
-        public bool IsActived { get; set; }
+        public bool IsActived { get; set; } 
 
     }
 }

@@ -9,8 +9,9 @@ namespace DataLayer
         {
             
         }
+
         public DbSet<Movie> Movies { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserMovie> UserMovieList { get; set; }
+        public DbSet<UserMovie> UserMovieList { get; set; } 
     }
 }
