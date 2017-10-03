@@ -73,13 +73,13 @@ namespace RandomRecommended
                         Console.WriteLine("       ***");
                         Console.WriteLine("       **");
                         Console.WriteLine("       *");
-                        Console.WriteLine("   that is Rate in " +
+                        Console.WriteLine("   its Rate is " +
                                           nonRepeatedMovies[index].Rate);
                         Console.WriteLine();
                         Console.WriteLine();
                         Console.WriteLine();
                         Console.WriteLine();
-                        Console.WriteLine("Do you accept the offer?(y/n)?");
+                        Console.WriteLine("Do you accept the offer(y/n)? ");
                         var accepted = Console.ReadLine();
                         if (accepted != null)
                         {
@@ -129,7 +129,7 @@ namespace RandomRecommended
         private static void StartAgain()
         {
          Console.Clear();
-            Console.WriteLine("Do you do Again?(y/n)");
+            Console.WriteLine("Do you do it again(y/n)?");
             var isAgain = Console.ReadLine();
             if (isAgain != null)
             {
@@ -142,7 +142,7 @@ namespace RandomRecommended
                 else
                 {
                     Console.Clear();
-                    Console.WriteLine("Bye");
+                    Console.WriteLine("Thanks Bye");
                     Console.ReadKey();
                 }
             }
