@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Data.Entity;
-using DomainClass;
 
-namespace DomainClass
+namespace RandomRecommended
 {
-    internal class ContextList  : System.Data.Entity.DbContext
+    public class ContextList  : System.Data.Entity.DbContext
     {
         public ContextList():base("RecommendTopMovies")
         {
@@ -12,6 +11,6 @@ namespace DomainClass
         }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserMovie> RecommandedMovies { get; set; }
+        public DbSet<RecommandedMovie> RecommandedMovies { get; set; }
     }
 }

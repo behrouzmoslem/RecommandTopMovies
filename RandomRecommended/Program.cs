@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using DomainClass;
 
-namespace RandomRecommended
+namespace DomainClass
 {
     class Program
     {
@@ -86,7 +87,7 @@ namespace RandomRecommended
                             accepted.ToLower() == "+".ToLower())
                         {
                             db.RecommandedMovies.Add(
-                                new RecommandedMovie()
+                                new UserMovie()
                                 {
                                     Id = 1,
                                     MovieId = nonRepeatedMovies[index].Id,

@@ -1,6 +1,6 @@
-namespace RandomRecommended
+namespace DomainClass
 {
-    internal class RecommandedMovie
+    public class UserMovie
     {
         public int Id { get; set; }
         public int MovieId { get; set; }

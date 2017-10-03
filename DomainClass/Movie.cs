@@ -1,4 +1,4 @@
-﻿namespace RandomRecommended
+﻿namespace DomainClass
 {
     public class Movie
     {
