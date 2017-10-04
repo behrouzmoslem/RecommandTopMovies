@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace DomainClass
 {
     public class UserMovie
@@ -5,6 +7,8 @@ namespace DomainClass
         public int Id { get; set; }
         public int MovieId { get; set; }
         public int UserId { get; set; }
-        public bool Accepted { get; set; }
+
+        [Column("IsActived")]
+        public bool Accepted { get; set; } = false;
     }
 }
