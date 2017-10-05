@@ -1,10 +1,14 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Runtime.InteropServices;
 using DomainClass;
 
 namespace DataLayer
 {
     public class ContextList : DbContext
     {
+        static List<Person> _personList = new List<Person>();
         public ContextList() : base("OfferMovie")
         {
 
@@ -14,8 +18,15 @@ namespace DataLayer
         public DbSet<User> Users { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Director> Directors { get; set; }
-        public DbSet<Actor> Actors { get; set; }
+        public DbSet<Star> Stars { get; set; }
         public DbSet<UserMovie> UserMovieList { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
+
 
 
 
@@ -24,28 +35,28 @@ namespace DataLayer
             protected override void Seed(ContextList context)
             {
 
-                context.Movies.Add(new Movie { Id = 1, LatinName = "The Shawshank Redemption 1994", PersianName = "رستگاری در شائوشنگ 1994", Rate = 9.2 ,FirstDirector = new Director(),MaleActor = new Actor(){ Person = TranslateToPerson("Tim", "Robbins", 1)  } });
-                context.Movies.Add(new Movie { Id = 2, LatinName = "The Godfather 1972", PersianName = "پدرخوانده 1972", Rate = 9.2 });
-                context.Movies.Add(new Movie { Id = 3, LatinName = "The Godfather: Part II 1974", PersianName = "پدرخوانده 2 1974", Rate = 9 });
-                context.Movies.Add(new Movie { Id = 4, LatinName = "The Dark Knight 2008", PersianName = " 2008 شوالیه تاریکی", Rate = 8.9 });
-                context.Movies.Add(new Movie { Id = 5, LatinName = "Pulp Fiction 1994", PersianName = "داستان عامه پسند 1994", Rate = 8.9 });
-                context.Movies.Add(new Movie { Id = 6, LatinName = "The Good, the Bad and the Ugly 1966", PersianName = "خوب، بد، زشت 1966", Rate = 8.9 });
-                context.Movies.Add(new Movie { Id = 7, LatinName = "Schindler's List 1993", PersianName = " فهرست شیندلر 1993", Rate = 8.9 });
-                context.Movies.Add(new Movie { Id = 8, LatinName = "12 Angry Men 1957", PersianName = " دوازده مرد خشمگین 1957", Rate = 8.9 });
-                context.Movies.Add(new Movie { Id = 9, LatinName = "The Lord of the Rings: The Return of the King 2003", PersianName = " ارباب حلقه ها: بازگشت سلطان 2003", Rate = 8.9 });
-                context.Movies.Add(new Movie { Id = 10, LatinName = "Fight Club 1999", PersianName = "باشگاه مشت زنی 1999", Rate = 8.8 });
-                context.Movies.Add(new Movie { Id = 11, LatinName = "The Lord of the Rings: The Fellowship of the Ring 2001", PersianName = " ارباب حلقه ها: یاران حلقه 2001", Rate = 8.8 });
-                context.Movies.Add(new Movie { Id = 12, LatinName = "Star Wars: Episode V The Empire Strikes Back 1980", PersianName = " جنگ ستارگان: امپراتوری حمله را پاسخ می دهد 1980", Rate = 8.8 });
-                context.Movies.Add(new Movie { Id = 13, LatinName = "Inception 2010", PersianName = " تلقین 2010", Rate = 8.7 });
-                context.Movies.Add(new Movie { Id = 14, LatinName = "Forrest Gump 1994", PersianName = " فارست گامپ 1994", Rate = 8.7 });
-                context.Movies.Add(new Movie { Id = 15, LatinName = "One Flew Over the Cuckoo's Nest 1975", PersianName = " دیوانه ای از قفس پرید 1975", Rate = 8.7 });
-                context.Movies.Add(new Movie { Id = 16, LatinName = "Goodfellas 1990", PersianName = " رفقای خوب 1990", Rate = 8.7 });
-                context.Movies.Add(new Movie { Id = 17, LatinName = "The Lord of the Rings: The Two Towers 2002", PersianName = " ارباب حلقه ها: دو برج 2002", Rate = 8.7 });
-                context.Movies.Add(new Movie { Id = 18, LatinName = "Star Wars: Episode IV A New Hope 1977", PersianName = " جنگ ستارگان: امید تازه 1977", Rate = 8.7 });
-                context.Movies.Add(new Movie { Id = 19, LatinName = "The Matrix 1999", PersianName = "ماتریکس 1999", Rate = 8.7 });
-                context.Movies.Add(new Movie { Id = 20, LatinName = "Seven Samurai 1954", PersianName = " هفت سامورایی 1954", Rate = 8.7 });
-                context.Movies.Add(new Movie { Id = 21, LatinName = "City of God 2002", PersianName = " شهر خدا 2002", Rate = 8.7 });
-                context.Movies.Add(new Movie { Id = 22, LatinName = "Se7en 1995", PersianName = " هفت 1995", Rate = 8.6 });
+                context.Movies.Add(new Movie { Id = 1, LatinName = "The Shawshank Redemption 1994", PersianName = "رستگاری در شائوشنگ 1994", Rate = 9.2, FirstDirector = TranslateToDirector("Frank", "Darabont", 1), Stars = new List<Star>() { TranslateToStar("Tim", "Robbins", 1), TranslateToStar("Morgan", "Freeman", 1) } });
+                context.Movies.Add(new Movie { Id = 2, LatinName = "The Godfather 1972", PersianName = "پدرخوانده 1972", Rate = 9.2, FirstDirector = TranslateToDirector("Francis", " Ford Coppola", 1), Stars = new List<Star>() { TranslateToStar("Marlon", "Brando", 1), TranslateToStar("Al", "Pacino", 1), TranslateToStar("James", "Caan", 1) } });
+                context.Movies.Add(new Movie { Id = 3, LatinName = "The Godfather: Part II 1974", PersianName = "پدرخوانده 2 1974", Rate = 9, FirstDirector = TranslateToDirector("Francis", " Ford Coppola", 1), Stars = new List<Star>() { TranslateToStar("Al", "Pacino", 1), TranslateToStar("Robert", " De Niro", 1), TranslateToStar("Robert", "Duvall", 1) } });
+                //context.Movies.Add(new Movie { Id = 4, LatinName = "The Dark Knight 2008", PersianName = " 2008 شوالیه تاریکی", Rate = 8.9 });
+                //context.Movies.Add(new Movie { Id = 5, LatinName = "Pulp Fiction 1994", PersianName = "داستان عامه پسند 1994", Rate = 8.9 });
+                //context.Movies.Add(new Movie { Id = 6, LatinName = "The Good, the Bad and the Ugly 1966", PersianName = "خوب، بد، زشت 1966", Rate = 8.9 });
+                //context.Movies.Add(new Movie { Id = 7, LatinName = "Schindler's List 1993", PersianName = " فهرست شیندلر 1993", Rate = 8.9 });
+                //context.Movies.Add(new Movie { Id = 8, LatinName = "12 Angry Men 1957", PersianName = " دوازده مرد خشمگین 1957", Rate = 8.9 });
+                //context.Movies.Add(new Movie { Id = 9, LatinName = "The Lord of the Rings: The Return of the King 2003", PersianName = " ارباب حلقه ها: بازگشت سلطان 2003", Rate = 8.9 });
+                //context.Movies.Add(new Movie { Id = 10, LatinName = "Fight Club 1999", PersianName = "باشگاه مشت زنی 1999", Rate = 8.8 });
+                //context.Movies.Add(new Movie { Id = 11, LatinName = "The Lord of the Rings: The Fellowship of the Ring 2001", PersianName = " ارباب حلقه ها: یاران حلقه 2001", Rate = 8.8 });
+                //context.Movies.Add(new Movie { Id = 12, LatinName = "Star Wars: Episode V The Empire Strikes Back 1980", PersianName = " جنگ ستارگان: امپراتوری حمله را پاسخ می دهد 1980", Rate = 8.8 });
+                //context.Movies.Add(new Movie { Id = 13, LatinName = "Inception 2010", PersianName = " تلقین 2010", Rate = 8.7 });
+                //context.Movies.Add(new Movie { Id = 14, LatinName = "Forrest Gump 1994", PersianName = " فارست گامپ 1994", Rate = 8.7 });
+                //context.Movies.Add(new Movie { Id = 15, LatinName = "One Flew Over the Cuckoo's Nest 1975", PersianName = " دیوانه ای از قفس پرید 1975", Rate = 8.7 });
+                //context.Movies.Add(new Movie { Id = 16, LatinName = "Goodfellas 1990", PersianName = " رفقای خوب 1990", Rate = 8.7 });
+                //context.Movies.Add(new Movie { Id = 17, LatinName = "The Lord of the Rings: The Two Towers 2002", PersianName = " ارباب حلقه ها: دو برج 2002", Rate = 8.7 });
+                //context.Movies.Add(new Movie { Id = 18, LatinName = "Star Wars: Episode IV A New Hope 1977", PersianName = " جنگ ستارگان: امید تازه 1977", Rate = 8.7 });
+                //context.Movies.Add(new Movie { Id = 19, LatinName = "The Matrix 1999", PersianName = "ماتریکس 1999", Rate = 8.7 });
+                //context.Movies.Add(new Movie { Id = 20, LatinName = "Seven Samurai 1954", PersianName = " هفت سامورایی 1954", Rate = 8.7 });
+                //context.Movies.Add(new Movie { Id = 21, LatinName = "City of God 2002", PersianName = " شهر خدا 2002", Rate = 8.7 });
+                //context.Movies.Add(new Movie { Id = 22, LatinName = "Se7en 1995", PersianName = " هفت 1995", Rate = 8.6 });
                 //context.Movies.Add(new Movie { Id = 23, LatinName = "The Usual Suspects 1995", PersianName = " مظنونین همیشگی 1995", Rate = 8.6 });
                 //context.Movies.Add(new Movie { Id = 24, LatinName = "The Silence of the Lambs 1991", PersianName = " سکوت بره ها 1991", Rate = 8.6 });
                 //context.Movies.Add(new Movie { Id = 25, LatinName = "Once Upon a Time in the West 1968", PersianName = " روزی روزگاری در غرب 1968", Rate = 8.6 });
@@ -282,15 +293,36 @@ namespace DataLayer
                 base.Seed(context);
 
             }
-
-            private static Person TranslateToPerson(string fn,string ln, int genderId)
+            private static Director TranslateToDirector(string fn, string ln, int genderId)
             {
-                return new Person() {FirstName = fn, LastName = ln, Gender = TranslateToGender(genderId) };
+                return new Director() { Person = TranslateToPerson(fn, ln, genderId) };
             }
+
+            private static Star TranslateToStar(string fn, string ln, int genderId)
+            {
+                return new Star() { Person = TranslateToPerson(fn, ln, genderId) };
+            }
+
+            private static Person TranslateToPerson(string fn, string ln, int genderId)
+            {
+                var oldRegisterPerson = _personList.FirstOrDefault(x => x.FirstName == fn && x.LastName == ln);
+                if (oldRegisterPerson == null )
+                {
+                    var person = new Person() { FirstName = fn, LastName = ln, Gender = TranslateToGender(genderId) };
+                    _personList.Add(person);
+                    return person;
+                }
+
+                return null;
+
+
+            }
+
+
 
             private static Gender TranslateToGender(int id)
             {
-                return new Gender(){Id = id,Title = GetGenderType(id)};
+                return new Gender() { Id = id, Title = GetGenderType(id) };
             }
 
             private static string GetGenderType(int id)

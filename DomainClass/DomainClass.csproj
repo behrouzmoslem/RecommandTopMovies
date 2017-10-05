@@ -42,8 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Director.cs" />
+    <Compile Include="Gender.cs" />
     <Compile Include="Movie.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Star.cs" />
     <Compile Include="UserMovie.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

@@ -7,8 +7,12 @@ using System.Xml.Serialization;
 namespace DomainClass
 {
     [Table("Movie",Schema = "Top")]
-    public class Movie
+    public sealed class Movie
     {
+        public Movie()
+        {
+            this.Stars = new HashSet<Star>();
+        }
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int Id { get; set; }
@@ -32,34 +36,12 @@ namespace DomainClass
         [InverseProperty("MoviesAsSecondDirector")]
         public   Director SecondDirector { get; set; }
 
-        public Actor MaleActor { get; set; }
-        public Actor FeMaleActor { get; set; }
+      
 
-
+        public ICollection<Star> Stars { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
-    }
-
-    public class Person
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key] 
-        public int Id { get; set; }
-        [StringLength(100)]
-        public string FirstName { get; set; } 
-        [StringLength(100)]
-        public string LastName { get; set; }
-        [NotMapped]
-        public string FullName => FirstName + " " + LastName;
-
-        public Gender Gender { get; set; }
-    }
-    [ComplexType]
-    public class Gender
-    { 
-        public int Id { get; set; }
-        public string Title { get; set; }
     }
 
     public enum GenderType
@@ -68,29 +50,4 @@ namespace DomainClass
         Male ,
         Female  
     }
-    public class Director  
-    {
-        
-        public Person Person { get; set; }
-        public int DirectorId { get; set; }
-        [InverseProperty("FirstDirector")]
-        public virtual ICollection<Movie> MoviesAsFirstDirector { get; set; }
-        [InverseProperty("SecondDirector")]
-        public virtual ICollection<Movie> MoviesAsSecondDirector { get; set; }
-        
-    }
-
-
-    public class Actor  
-    {
-        public Person Person { get; set; }
-        public int ActorId { get; set; }
-    
-        public virtual ICollection<Movie> ActorMovies { get; set; }
-      
-
-    }
-
-
-
 }

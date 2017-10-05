@@ -162,6 +162,10 @@ namespace RandomRecommended
             return movielist;
         }
 
-       
+        private static Person GetPerson(DbSet<Person> dbPersons, string fn, string ln)
+        {
+            var person = dbPersons.FirstOrDefault(x => x.FirstName== fn && x.LastName == ln);
+            return person;
+        }
     }
 }
