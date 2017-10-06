@@ -8,11 +8,7 @@ namespace DomainClass
 {
     [Table("Movie",Schema = "Top")]
     public sealed class Movie
-    {
-        public Movie()
-        {
-            this.Stars = new HashSet<Star>();
-        }
+    { 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int Id { get; set; }
@@ -30,16 +26,6 @@ namespace DomainClass
 
         [StringLength(1000)]
         public string Description { get; set; }
-
-        [InverseProperty("MoviesAsFirstDirector")]
-        public   Director FirstDirector { get; set; }
-        [InverseProperty("MoviesAsSecondDirector")]
-        public   Director SecondDirector { get; set; }
-
-      
-
-        public ICollection<Star> Stars { get; set; }
-
         [Timestamp]
         public byte[] RowVersion { get; set; }
     }

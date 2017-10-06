@@ -8,17 +8,14 @@ namespace DataLayer
 {
     public class ContextList : DbContext
     {
-        static List<Person> _personList = new List<Person>();
+       
         public ContextList() : base("OfferMovie")
         {
 
         }
 
         public DbSet<Movie> Movies { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Person> Persons { get; set; }
-        public DbSet<Director> Directors { get; set; }
-        public DbSet<Star> Stars { get; set; }
+        public DbSet<User> Users { get; set; }  
         public DbSet<UserMovie> UserMovieList { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -35,9 +32,9 @@ namespace DataLayer
             protected override void Seed(ContextList context)
             {
 
-                context.Movies.Add(new Movie { Id = 1, LatinName = "The Shawshank Redemption 1994", PersianName = "رستگاری در شائوشنگ 1994", Rate = 9.2, FirstDirector = TranslateToDirector("Frank", "Darabont", 1), Stars = new List<Star>() { TranslateToStar("Tim", "Robbins", 1), TranslateToStar("Morgan", "Freeman", 1) } });
-                context.Movies.Add(new Movie { Id = 2, LatinName = "The Godfather 1972", PersianName = "پدرخوانده 1972", Rate = 9.2, FirstDirector = TranslateToDirector("Francis", " Ford Coppola", 1), Stars = new List<Star>() { TranslateToStar("Marlon", "Brando", 1), TranslateToStar("Al", "Pacino", 1), TranslateToStar("James", "Caan", 1) } });
-                context.Movies.Add(new Movie { Id = 3, LatinName = "The Godfather: Part II 1974", PersianName = "پدرخوانده 2 1974", Rate = 9, FirstDirector = TranslateToDirector("Francis", " Ford Coppola", 1), Stars = new List<Star>() { TranslateToStar("Al", "Pacino", 1), TranslateToStar("Robert", " De Niro", 1), TranslateToStar("Robert", "Duvall", 1) } });
+                context.Movies.Add(new Movie { Id = 1, LatinName = "The Shawshank Redemption 1994", PersianName = "رستگاری در شائوشنگ 1994", Rate = 9.2 });
+                context.Movies.Add(new Movie { Id = 2, LatinName = "The Godfather 1972", PersianName = "پدرخوانده 1972", Rate = 9.2});
+                context.Movies.Add(new Movie { Id = 3, LatinName = "The Godfather: Part II 1974", PersianName = "پدرخوانده 2 1974", Rate = 9 });
                 //context.Movies.Add(new Movie { Id = 4, LatinName = "The Dark Knight 2008", PersianName = " 2008 شوالیه تاریکی", Rate = 8.9 });
                 //context.Movies.Add(new Movie { Id = 5, LatinName = "Pulp Fiction 1994", PersianName = "داستان عامه پسند 1994", Rate = 8.9 });
                 //context.Movies.Add(new Movie { Id = 6, LatinName = "The Good, the Bad and the Ugly 1966", PersianName = "خوب، بد، زشت 1966", Rate = 8.9 });
@@ -292,38 +289,7 @@ namespace DataLayer
 
                 base.Seed(context);
 
-            }
-            private static Director TranslateToDirector(string fn, string ln, int genderId)
-            {
-                return new Director() { Person = TranslateToPerson(fn, ln, genderId) };
-            }
-
-            private static Star TranslateToStar(string fn, string ln, int genderId)
-            {
-                return new Star() { Person = TranslateToPerson(fn, ln, genderId) };
-            }
-
-            private static Person TranslateToPerson(string fn, string ln, int genderId)
-            {
-                var oldRegisterPerson = _personList.FirstOrDefault(x => x.FirstName == fn && x.LastName == ln);
-                if (oldRegisterPerson == null )
-                {
-                    var person = new Person() { FirstName = fn, LastName = ln, Gender = TranslateToGender(genderId) };
-                    _personList.Add(person);
-                    return person;
-                }
-
-                return null;
-
-
-            }
-
-
-
-            private static Gender TranslateToGender(int id)
-            {
-                return new Gender() { Id = id, Title = GetGenderType(id) };
-            }
+            } 
 
             private static string GetGenderType(int id)
             {
