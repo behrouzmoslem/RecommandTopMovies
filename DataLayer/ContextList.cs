@@ -291,19 +291,7 @@ namespace DataLayer
 
             } 
 
-            private static string GetGenderType(int id)
-            {
-                if (id == (int)GenderType.Male)
-                    return GenderType.Male.ToString();
-                else if (id == (int)GenderType.Female)
-                {
-                    return GenderType.Female.ToString();
-                }
-                else
-                {
-                    return GenderType.NotRegister.ToString();
-                }
-            }
+         
 
 
         }

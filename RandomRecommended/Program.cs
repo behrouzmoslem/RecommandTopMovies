@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations.Model;
 using System.Linq;
 using DataLayer;
 using DomainClass;
@@ -32,7 +33,7 @@ namespace RandomRecommended
             }
             else
             {
-                Database.SetInitializer(new ContextList.MyCustomInitializer());
+                Database.SetInitializer(new MigrateDatabaseToLatestVersion<ContextList, DataLayer.Migrations.Configuration>());
                 var db = new ContextList();
                 inputUser = inputUser.ToLower().Trim();
                 Console.Clear();

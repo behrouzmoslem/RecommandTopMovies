@@ -6,34 +6,19 @@ using System.Xml.Serialization;
 
 namespace DomainClass
 {
-    [Table("Movie",Schema = "Top")]
-    public sealed class Movie
+    [Table("Movie",Schema = "TOP")]
+    public  class Movie
     { 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         [MaxLength(150, ErrorMessage = "Up to 150 chars")]
         [Required(ErrorMessage = "Please Latin Name is insert")]
-        [ConcurrencyCheck]
         public string LatinName { get; set; }
         [MaxLength(150, ErrorMessage = "Up to 150 chars")]
         [Required(ErrorMessage = "Please Persian Name is insert")]
-        [ConcurrencyCheck]
         public string PersianName { get; set; }
-        [Range(1,10)]
-        [DefaultValue(1)]
-        public double Rate { get; set; } 
-
-        [StringLength(1000)]
-        public string Description { get; set; }
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
-    }
-
-    public enum GenderType
-    {
-        NotRegister,
-        Male ,
-        Female  
-    }
+        [Range(1, 10)]
+        public double Rate { get; set; }  
+    } 
 }
