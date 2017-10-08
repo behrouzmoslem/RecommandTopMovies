@@ -15,6 +15,11 @@ namespace DomainClass
 
         public bool IsActived { get; set; } = false;
 
+        [Timestamp]
+        public byte[]  Rows { get; set; }
+
+
+
 
     }
 }

@@ -11,7 +11,7 @@ namespace DataLayer.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
             AutomaticMigrationDataLossAllowed = true;
             ContextKey = "DataLayer.ContextList";
         }
