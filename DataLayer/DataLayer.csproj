@@ -48,11 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContextList.cs" />
-    <Compile Include="Migrations\201710080548371_InitialCreate.cs" />
-    <Compile Include="Migrations\201710080548371_InitialCreate.Designer.cs">
-      <DependentUpon>201710080548371_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,11 +59,6 @@
       <Project>{2A4847D8-B413-4B3F-800D-8726AB7D8CE5}</Project>
       <Name>DomainClass</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710080548371_InitialCreate.resx">
-      <DependentUpon>201710080548371_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
